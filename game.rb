@@ -4,8 +4,10 @@ require 'pry'
 require_relative 'hero'
 require_relative 'monster'
 require_relative 'party'
+require_relative 'shop'
 
 class Game
+  attr_reader :hero_party
   STOCK_HEROES = [
     Hero.new({
       name: "Artemis",
@@ -36,8 +38,45 @@ class Game
     })
   ]
 
+  STOCK_MONSTERS = [
+    Monster.new({
+    name: "Goblin",
+    hp: 9,
+    weapon: Weapon.new({
+      name: "his wife's rusty last kitchen knife",
+      damage: 1,
+      price: 1
+    }),
+    xp: 2,
+    gold: 1
+  }),
+    Monster.new({
+      name: "Satyr",
+      hp: 30,
+      weapon: Weapon.new({
+        name: "Mighty Axe",
+        damage: 10,
+        price: 1
+      }),
+      xp: 2,
+      gold: 1
+    }),
+    Monster.new({
+      name: "Cyclops",
+      hp: 15,
+      weapon: Weapon.new({
+        name: "Wooden club",
+        damage: 1,
+        price: 1
+      }),
+      xp: 2,
+      gold: 1
+    })
+  ]
+
   def initialize
     @heroes = enlist_heroes
+    @shop = Shop.new
   end
 
   def enlist_heroes
@@ -65,7 +104,7 @@ class Game
   end
 
   def enter_shop
-
+    @shop.enter(@heroes)
   end
 
   def town_message
@@ -88,12 +127,14 @@ class Game
   end
 
   def play
-    town_message
-    case get_location
-    when :forest
-      enter_forest
-    when :shop
-      enter_shop
+    while @heroes.any?
+      town_message
+      case get_location
+      when :forest
+        enter_forest
+      when :shop
+        enter_shop
+      end
     end
   end
 end

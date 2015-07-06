@@ -17,9 +17,20 @@ class Party
   def none?
     !any?
   end
+
+  def cleanup!
+  	the_dead = @alive.select{|member| memeber.is_dead?}
+  	@alive -= the_dead
+  	@dead -= the_dead
+  end
 end
 
+
 class HeroParty < Party
+	attr_reader :gold
+	def initialize 
+		@gold = 0
+	super
   def attack(opposing_party)
     # sending message to user, asking which monster to attack
     puts "Which monster would you like to attack?"
