@@ -29,6 +29,7 @@ class Entity
   def to_s
     "#{@name}"
   end
+end
 
 
 
@@ -40,4 +41,3 @@ class Entity
   # def this_is_private
   #   "HEY, HOW'D YOU GET HERE?"
   # end
-end
