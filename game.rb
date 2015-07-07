@@ -38,45 +38,11 @@ class Game
     })
   ]
 
-  STOCK_MONSTERS = [
-    Monster.new({
-    name: "Goblin",
-    hp: 9,
-    weapon: Weapon.new({
-      name: "his wife's rusty last kitchen knife",
-      damage: 1,
-      price: 1
-    }),
-    xp: 2,
-    gold: 1
-  }),
-    Monster.new({
-      name: "Satyr",
-      hp: 30,
-      weapon: Weapon.new({
-        name: "Mighty Axe",
-        damage: 10,
-        price: 1
-      }),
-      xp: 2,
-      gold: 1
-    }),
-    Monster.new({
-      name: "Cyclops",
-      hp: 15,
-      weapon: Weapon.new({
-        name: "Wooden club",
-        damage: 1,
-        price: 1
-      }),
-      xp: 2,
-      gold: 1
-    })
-  ]
 
   def initialize
     @heroes = enlist_heroes
     @shop = Shop.new
+    @forest = Forest.new
   end
 
   def enlist_heroes
@@ -101,6 +67,62 @@ class Game
 
   def enter_forest
 
+    STOCK_MONSTERS = [
+      Monster.new({
+      name: "Goblin",
+      hp: 9,
+      weapon: Weapon.new({
+        name: "his wife's rusty last kitchen knife",
+        damage: 1,
+        price: 1
+      }),
+      xp: 2,
+      gold: 1
+    }),
+      Monster.new({
+        name: "Satyr",
+        hp: 30,
+        weapon: Weapon.new({
+          name: "Mighty Axe",
+          damage: 10,
+          price: 1
+        }),
+        xp: 2,
+        gold: 1
+      }),
+      Monster.new({
+        name: "Cyclops",
+        hp: 15,
+        weapon: Weapon.new({
+          name: "Wooden club",
+          damage: 1,
+          price: 1
+        }),
+        xp: 2,
+        gold: 1
+      })
+    ]
+    #monsters.enroll (some stuff)
+    # todo: loop @heroes.attack(monsters), monsters.attack(@heroes)...
+
+    def enlist_monsters
+    STOCK_MONSTERS.each_with_index do |monster, index|
+      puts "#{index + 1}. #{monster} - HP: #{monster.max_hp}, " + 
+           "Weapon: #{monster.weapon}, " + 
+           "Damage: #{monster.weapon.damage}"
+    end
+
+    print "Choose two monsters for your party (e.g. 1, 2) > "
+    choices = gets.chomp.split(', ')
+
+    @monster_party = MonsterParty.new
+
+    choices.each do |val|
+      @monster_party.enroll(STOCK_MONSTERS[val.to_i - 1])
+    end
+  end
+
+    # after each of the above attacks, also remember to cleanup
   end
 
   def enter_shop
